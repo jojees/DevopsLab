@@ -1,0 +1,24 @@
+plugin: community.docker.docker_containers
+docker_host: unix://var/run/docker.sock
+verbose_output: False
+timeout: 20
+debug: true
+keyed_groups:
+  - key: 'docker_platform'
+    prefix: os
+  - key: 'docker_driver'
+    prefix: drv
+  - key: 'docker_hostconfig.NetworkMode'
+    separator: ""
+  # - key: 'docker_config.Labels["com.docker.compose.project"]'
+  #   prefix: prj
+  - key: container_platform_pretty_name.NAME
+    prefix: ""
+    separator: ""
+  - key: container_platform_pretty_name.SHORT_NAME
+    prefix: ""
+    separator: ""
+
+compose:
+  # container_platform_version: docker_config.Image | split(':') | last | replace('-', '.')
+  container_platform_pretty_name: docker_config.Image | pplatform_family

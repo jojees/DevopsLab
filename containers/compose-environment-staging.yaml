@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  ubuntu20:
+    networks:
+      - stage 
+
+  ubuntu22:
+    networks:
+      - stage 
+
+  ubuntu18:
+    networks:
+      - stage 
+
+networks:
+  stage:
+    name: staging

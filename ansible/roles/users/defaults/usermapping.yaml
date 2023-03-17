@@ -1,0 +1,14 @@
+---
+geocenters:
+- india
+- america
+- japan
+- europe
+
+certs:
+- common
+- pci
+- gdpr
+- fedramp
+- ismap
+- hipaa

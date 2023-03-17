@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  ubuntu20:
+    image: jojees/ubuntu:20.04
+    tty: True
+    build:
+      context: .
+      dockerfile: Dockerfile-ubuntu20
+
+  ubuntu22:
+    image: jojees/ubuntu:22.04
+    tty: True
+    build:
+      context: .
+      dockerfile: Dockerfile-ubuntu22
+
+  ubuntu18:
+    image: jojees/ubuntu:18.04
+    tty: True
+    build:
+      context: .
+      dockerfile: Dockerfile-ubuntu18

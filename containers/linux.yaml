@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  ubuntu:
+    image: ubuntu:20.04
+    tty: True
+  fedora:
+    image: fedora:36
+    tty: True
+  archlinux:
+    image: archlinux:base
+    tty: True
+  oraclelinux:
+    image: oraclelinux:9-slim
+    tty: True
+  opensuse:
+    image: opensuse/leap:15
+    tty: True
+  centos:
+    image: centos:7
+    tty: True

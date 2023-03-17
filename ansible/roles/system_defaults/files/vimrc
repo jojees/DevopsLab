@@ -1,0 +1,9 @@
+set bg=dark
+syntax on
+set number
+set cursorline
+set cursorcolumn
+highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+autocmd FileType yaml setlocal ai ts=2 sw=2 
+autocmd FileType json setlocal ai 
+autocmd FileType jinja setlocal ai ts=2 sw=2

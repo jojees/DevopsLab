@@ -1,0 +1,8 @@
+  507  vagrant up --provider=virtualbox
+  508  vagrant --version
+  509  sudo vi /opt/vagrant/embedded/gems/2.2.6/gems/vagrant-2.2.6/plugins/providers/virtualbox/driver/meta.rb 
+  510  sudo cp -p /opt/vagrant/embedded/gems/2.2.6/gems/vagrant-2.2.6/plugins/providers/virtualbox/driver/version_6_0.rb /opt/vagrant/embedded/gems/2.2.6/gems/vagrant-2.2.6/plugins/providers/virtualbox/driver/version_6_1.rb
+  511  sudo vi /opt/vagrant/embedded/gems/2.2.6/gems/vagrant-2.2.6/plugins/providers/virtualbox/driver/version_6_1.rb 
+  512  sudo vi /opt/vagrant/embedded/gems/2.2.6/gems/vagrant-2.2.6/plugins/providers/virtualbox/driver/version_6_1.rb 
+  513  sudo vi /opt/vagrant/embedded/gems/2.2.6/gems/vagrant-2.2.6/plugins/providers/virtualbox/plugin.rb 
+  514  history 

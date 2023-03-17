@@ -1,0 +1,30 @@
+---
+- name: Upgrade to latest packages.
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: "{{ cache_valid_time }}"
+  register: aptupdate
+  no_log: true
+
+- debug: msg="{{ aptupdate.stdout_lines }}"
+  when: aptupdate.stdout_lines is defined
+
+- name: Install prerequisite packages.
+  apt:
+    name: "{{ default_packages }}"
+  register: aptinstall
+  ignore_errors: yes
+  no_log: true
+
+- name: Apt command execution succeeded.
+  debug: msg="{{ aptinstall.stdout_lines }}"
+  when: aptinstall.stdout_lines is defined
+
+- name: Apt command execution failed.
+  debug: msg="{{ aptinstall.stderr_lines }}"
+  when: aptinstall.stderr_lines is defined
+
+- name: Apt command evaluation failed. 
+  debug: msg="{{ aptinstall }}"
+  when: aptinstall is defined

@@ -1,0 +1,4 @@
+---
+- include_tasks: package_update.yaml
+- include_tasks: vimrc.yaml
+# - include_tasks: bash.yaml

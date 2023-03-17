@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  ubuntu20:
+    networks:
+      - preprod 
+
+  ubuntu22:
+    networks:
+      - preprod 
+
+  ubuntu18:
+    networks:
+      - preprod 
+
+networks:
+  preprod:
+    name: preprod

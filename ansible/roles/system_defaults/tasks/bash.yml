@@ -1,0 +1,10 @@
+---
+- name: Update bash profile for users.
+  template:
+    src: files/custom_profile
+    dest: "/etc/profile.d/X99-custom-profile"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+
+# - name: 
