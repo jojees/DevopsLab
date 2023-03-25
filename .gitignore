@@ -135,3 +135,6 @@ dmypy.json
 
 # Ignore Gradle build output directory
 build
+
+# Ignore logs.
+containers/ansible.log

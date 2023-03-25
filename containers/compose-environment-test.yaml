@@ -2,14 +2,26 @@ version: "3.9"
 
 services:
   ubuntu20:
+    build:
+      labels:
+        evironment_owner: "qa"
+        billing.owner: "qa-goverance"
     networks:
       - test 
 
   ubuntu22:
+    build:
+      labels:
+        evironment_owner: "qa"
+        billing.owner: "qa-goverance"
     networks:
       - test 
 
   ubuntu18:
+    build:
+      labels:
+        evironment_owner: "qa"
+        billing.owner: "qa-goverance"
     networks:
       - test 
 

@@ -1,5 +1,10 @@
 #! /usr/bin/env python
 
+'''
+Script should not clutter the screen, but rather show only the latest state.
+Script should accept ctrl commands, so that when CTRL-C is pressed, it exits quitely.
+Script should be able to check the status of the backup.
+'''
 import boto3
 import time
 

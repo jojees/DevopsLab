@@ -5,6 +5,11 @@ services:
     image: jojees/ubuntu:20.04
     tty: True
     build:
+      labels:
+        application.group: "vanilla"
+        application.age: "moderate"
+        maintenance.owner: "Engineering"
+        billing.owner: "Engineering"
       context: .
       dockerfile: Dockerfile-ubuntu20
 
@@ -12,12 +17,23 @@ services:
     image: jojees/ubuntu:22.04
     tty: True
     build:
+      labels:
+        application.group: "vanilla"
+        application.age: "low"
+        maintenance.owner: "Engineering"
+        billing.owner: "Engineering"
       context: .
       dockerfile: Dockerfile-ubuntu22
+    stop_grace_period: 1s
 
   ubuntu18:
     image: jojees/ubuntu:18.04
     tty: True
     build:
+      labels:
+        application.group: "vanilla"
+        application.age: "high"
+        maintenance.owner: "Engineering"
+        billing.owner: "Engineering"
       context: .
       dockerfile: Dockerfile-ubuntu18
