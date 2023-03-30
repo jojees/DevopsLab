@@ -1,0 +1,6 @@
+---
+- name: Delete unrelated groups
+  ansible.builtin.group:
+    name: "{{ item }}"
+    state: absent
+  with_items: "{{ _non_essential_service_groups.stdout_lines }}"

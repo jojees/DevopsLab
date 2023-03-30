@@ -138,3 +138,6 @@ build
 
 # Ignore logs.
 containers/ansible.log
+
+# MacOs 
+.DS_Store
