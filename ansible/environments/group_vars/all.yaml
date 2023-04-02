@@ -1,0 +1,23 @@
+---
+lab_setup: True
+sudo_users: ops
+service_group_starting_gid: 5000
+user_group_starting_uid: 6000
+
+default_service_groups:
+  - name: ops
+    gid: 5000
+  - name: sre
+    gid: 5001
+  - name: secops
+    gid: 5002
+  - name: auditors
+    gid: 5003
+  - name: dev
+    gid: 5004
+  - name: qa
+    gid: 5005
+  - name: release
+    gid: 5006
+  - name: pgm
+    gid: 5007

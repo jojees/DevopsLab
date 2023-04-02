@@ -5,10 +5,10 @@ timeout: 20
 debug: false
 ansible_user: root
 keyed_groups:
-  - key: 'docker_platform'
-    prefix: os
-  - key: 'docker_driver'
-    prefix: drv
+  # - key: 'docker_platform'
+  #   prefix: os
+  # - key: 'docker_driver'
+  #   prefix: drv
   - key: 'docker_hostconfig.NetworkMode'
     separator: ""
   # - key: 'docker_config.Labels["com.docker.compose.project"]'
@@ -22,6 +22,9 @@ keyed_groups:
   - key: environment_placement
     prefix: ""
     separator: ""
+  - key: container_service
+    prefix: "service"
+    separator: "_"
 
 compose:
   # container_platform_version: docker_config.Image | split(':') | last | replace('-', '.')
@@ -33,3 +36,4 @@ compose:
   billing_owner: docker_config.Labels["billing.owner"]
   environment_owner: docker_config.Labels["environment_owner"]
   maintenance_owner: docker_config.Labels["maintenance_owner"]
+  container_service: docker_config.Labels["com.docker.compose.service"]

@@ -1,8 +1,11 @@
 ---
 - name: Test playbook
-  hosts: localhost
+  hosts: all
   gather_facts: false
 
   tasks:
     - name: Just ping
       ansible.builtin.ping:
+
+  roles:
+    - users
