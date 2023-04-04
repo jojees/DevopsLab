@@ -1,7 +1,7 @@
 ---
 - name: Configure node
   hosts: all
-  become: yes
+  become: true
 
   roles:
     - system_defaults

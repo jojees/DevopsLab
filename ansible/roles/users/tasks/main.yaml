@@ -18,3 +18,42 @@
   changed_when: _non_essential_service_groups.stdout_lines | length > 0
   failed_when: _non_essential_service_groups.stderr_lines | length > 0
   notify: Delete unrelated groups
+
+- name: Record specified groups into a variable
+  ansible.builtin.set_fact:
+    # groups_of_users: "{{ groups_of_users| default([])  + [ item | regex_replace('^-(.*)$', '\\1') ] }}"
+    specified_groups: "{{ specified_groups | default([]) + [item | replace('-', '', 1)] }}"
+  loop: "{{ accounts }}"
+  when: item is match("-")
+
+- name: Record specified users into a variable
+  ansible.builtin.set_fact:
+    specified_users: "{{ specified_users | default([]) + [item] }}"
+  loop: "{{ accounts }}"
+  when: item is not match("-")
+
+- name: Add users from specified groups to a list
+  ansible.builtin.set_fact:
+    users_from_specified_groups: "{{ users_from_specified_groups | default([]) + [user_accounts | json_query(query)] }}"
+  vars:
+    query: "[?groups.contains(@, '{{ item }}')].name"
+  loop: "{{ specified_groups }}"
+
+- name: Final list of Users
+  ansible.builtin.set_fact:
+    final_user_list: "{{ (users_from_specified_groups + specified_users) | flatten | unique }}"
+
+#The above 4 tasks has to be reduced to one or zero tasks.
+
+#Optimize:
+#1. The task should not iterate through all the users accounts to determine if the account is needed.
+
+- name: Create users
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    comment: "{{ item.comment | default(omit) }}"
+    groups: "{{ item.groups | default(omit) }}"
+    shell: "{{ item.shell | default('/bin/bash', true) }}"
+    uid: "{{ item.uid }}"
+  loop: "{{ user_accounts }}"
+  when: item.name in final_user_list

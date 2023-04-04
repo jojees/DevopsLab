@@ -2,10 +2,58 @@
 - name: Test playbook
   hosts: all
   gather_facts: false
+  vars:
+  # Following vars(user_accounts & accounts should move out of the playbook)
+    user_accounts:
+      - name: ops1
+        uid: 6001
+        groups:
+          - ops
+        comment: "Operations user1"
+      - name: ops2
+        uid: 6002
+        groups:
+          - ops
+        comment: "Operations user2"
+      - name: sre1
+        uid: 6003
+        groups:
+          - sre
+        comment: "SRE user1"
+      - name: sre2
+        uid: 6004
+        groups:
+          - sre
+        comment: "SRE user2"
+      - name: dev1
+        uid: 6005
+        groups:
+          - dev
+          - qa
+        comment: "DEV user1"
+      - name: dev2
+        uid: 6006
+        groups:
+          - dev
+        comment: "DEV user2"
+      - name: qa1
+        uid: 6007
+        groups:
+          - qa
+        comment: "QA user1"
+      - name: qa2
+        uid: 6008
+        groups:
+          - qa
+        comment: "QA user2"
 
-  tasks:
-    - name: Just ping
-      ansible.builtin.ping:
+
+    accounts:
+      - -dev
+      - -qa
+      - -ops
+      - ops1
+      - sre2
 
   roles:
     - users
