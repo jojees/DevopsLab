@@ -43,10 +43,10 @@
   ansible.builtin.set_fact:
     final_user_list: "{{ (users_from_specified_groups + specified_users) | flatten | unique }}"
 
-#The above 4 tasks has to be reduced to one or zero tasks.
+# The above 4 tasks has to be reduced to one or zero tasks.
 
-#Optimize:
-#1. The task should not iterate through all the users accounts to determine if the account is needed.
+# Optimize:
+# 1. The task should not iterate through all the users accounts to determine if the account is needed.
 
 - name: Create users
   ansible.builtin.user:
