@@ -1,47 +1,56 @@
 ---
 - name: Test playbook
   hosts: all
+  strategy: free # noqa: run-once[task]
   gather_facts: false
   vars:
   # Following vars(user_accounts & accounts should move out of the playbook)
     user_accounts:
       - name: ops1
+        username: ops1
         uid: 6001
         groups:
           - ops
         comment: "Operations user1"
       - name: ops2
+        username: ops2
         uid: 6002
         groups:
           - ops
         comment: "Operations user2"
       - name: sre1
+        username: sre1
         uid: 6003
         groups:
           - sre
         comment: "SRE user1"
       - name: sre2
+        username: sre2
         uid: 6004
         groups:
           - sre
         comment: "SRE user2"
       - name: dev1
+        username: dev1
         uid: 6005
         groups:
           - dev
           - qa
         comment: "DEV user1"
       - name: dev2
+        username: dev2
         uid: 6006
         groups:
           - dev
         comment: "DEV user2"
       - name: qa1
+        username: qa1
         uid: 6007
         groups:
           - qa
         comment: "QA user1"
       - name: qa2
+        username: qa2
         uid: 6008
         groups:
           - qa
