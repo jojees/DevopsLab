@@ -141,3 +141,6 @@ containers/ansible.log
 
 # MacOs 
 .DS_Store
+
+# VsCode files
+.vscode/settings.json

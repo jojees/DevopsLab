@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "devopslab"
+version = "0.1.0"
+description = "DevOps Lab on homelab server01"
+authors = ["Jojees <joji@jojees.net>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+ansible = "^8.4.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
