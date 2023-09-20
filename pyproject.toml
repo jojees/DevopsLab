@@ -8,18 +8,26 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 ansible = "^8.4.0"
-ansible-lint = { version = "^6.20.0", markers = "platform_system != 'Windows'" }
 
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.4.0"
+ansible-lint = { version = "^6.20.0", markers = "platform_system != 'Windows'" }
 
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.4.2"
 flake8 = "^6.1.0"
 tox = "^4.11.3"
+black = "^23.9.1"
+
+
+[tool.poetry.group.build.dependencies]
+setuptools-scm = "^8.0.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.setuptools_scm]
+version_scheme = "pre-release"

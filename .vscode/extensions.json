@@ -1,5 +1,11 @@
 {
     "recommendations": [
-        "redhat.ansible"
+        "redhat.ansible",
+        "ms-python.autopep8",
+        "ms-python.flake8",
+        "ms-python.vscode-pylance",
+        "ms-python.pylint",
+        "ms-python.python",
+        "redhat.vscode-yaml"
     ]
 }
