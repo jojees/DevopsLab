@@ -1,24 +1,25 @@
 ---
 - name: Add .vimrc configuration to skell directory.
-  template:
+  ansible.builtin.template:
     src: files/vimrc
     dest: /etc/skel/.vimrc
+    mode: '0644'
 
 - name: Add primary users to default users list.
-  set_fact:
+  ansible.builtin.set_fact:
     default_users: "{{ users.primary }}"
 
 - name: Check for default sudo user.
-  debug:
+  ansible.builtin.debug:
     var: ansible_facts['env']['SUDO_USER']
 
 - name: Add vagrant user to default users list.
-  set_fact:
-    default_users: "{{ users.primary +  users.vagrant }}"
+  ansible.builtin.set_fact:
+    default_users: "{{ users.primary + users.vagrant }}"
   when: ansible_facts['env']['SUDO_USER'] == 'vagrant'
 
 - name: Add .vimrc configuration file for default users.
-  template:
+  ansible.builtin.template:
     src: files/vimrc
     dest: "{{ '~' + item + '/.vimrc' }}"
     owner: "{{ item }}"

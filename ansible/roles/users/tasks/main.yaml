@@ -4,14 +4,14 @@
     name: "{{ item.name }}"
     state: present
     gid: "{{ item.gid }}"
-  with_items: "{{ default_service_groups }}"
+  with_items: "{{ users_default_service_groups }}"
 
 - name: Identify non essential service groups.
   ansible.builtin.shell: |
     set -o pipefail
     first_gid=`grep 'FIRST_GID' /etc/adduser.conf | awk -F '=' '{print $2}'`
-    getent group | awk -F ':' '$3 >= first_gid && $3 < service_group_starting_gid {print $1}' \
-    first_gid=$first_gid service_group_starting_gid={{ service_group_starting_gid }}
+    getent group | awk -F ':' '$3 >= first_gid && $3 < users_service_group_starting_gid {print $1}' \
+    first_gid=$first_gid service_group_starting_gid={{ users_service_group_starting_gid }}
   args:
     executable: /bin/bash
   register: _non_essential_service_groups

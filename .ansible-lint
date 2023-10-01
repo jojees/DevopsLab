@@ -1,5 +1,10 @@
 exclude_paths:
-  - ./containers/
+  - containers/
   - ./ansible/environments/
-  - ./scripts/
-  - ./vagrant/
+  - scripts/
+  - vagrant/
+  - .pre-commit-config.yaml
+  - .ansible-lint
+
+profile: production
+# verbosity: 1

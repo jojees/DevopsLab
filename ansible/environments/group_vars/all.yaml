@@ -1,5 +1,5 @@
 ---
-lab_setup: True
+lab_setup: true
 sudo_users: ops
 service_group_starting_gid: 5000
 user_group_starting_uid: 6000

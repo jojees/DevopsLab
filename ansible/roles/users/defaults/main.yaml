@@ -1,7 +1,7 @@
 ---
-service_group_starting_gid: 1000
-user_group_starting_uid: 1000
+users_service_group_starting_gid: 1000
+users_user_group_starting_uid: 1000
 
-default_service_groups:
+users_default_service_groups:
   - name: ansible
     gid: 2000

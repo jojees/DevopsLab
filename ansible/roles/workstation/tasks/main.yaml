@@ -1,0 +1,6 @@
+---
+- name: Install packages needed on workstation
+  community.general.homebrew:
+    name: "{{ workstation_packages }}"
+    state: latest
+    update_homebrew: true

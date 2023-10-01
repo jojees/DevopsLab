@@ -1,0 +1,13 @@
+labservers:
+  hosts:
+    server01.jojees.local:
+      ansible_host: 192.168.2.3
+      ansible_user: joji
+      ansible_password: joji
+  vars:
+    ansible_connection: ssh
+workstation:
+  hosts:
+    localhost:
+  vars:
+    ansible_connection: local

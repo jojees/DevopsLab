@@ -1,6 +1,6 @@
 plugin: community.docker.docker_containers
 docker_host: unix://var/run/docker.sock
-verbose_output: False
+verbose_output: false
 timeout: 20
 debug: false
 ansible_user: root
