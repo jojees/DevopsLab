@@ -1,0 +1,199 @@
+---
+# Add more default groups as needed and please make sure that new
+# groups are appended below while incrementing their GID.
+user_groups:
+  - group: ops
+    group_id: 2001
+  - group: dev
+    group_id: 2002
+  - group: test
+    group_id: 2003
+  - group: prodappadmin
+    group_id: 2004
+  - group: corpappadmin
+    group_id: 2005
+  - group: support
+    group_id: 2006
+  - group: release
+    group_id: 2007
+  - group: sre
+    group_id: 2008
+  - group: infraops
+    group_id: 2009
+
+# Add more users as needed and please make sure that new
+# users are appended below while incrementing their UID.
+users:
+  - username: ops1
+    uid: 3001
+    groups: ['ops']
+  - username: ops2
+    uid: 3002
+    groups: ['ops']
+  - username: ops3
+    uid: 3003
+    groups: ['ops']
+
+  - username: appadmin1
+    uid: 3004
+    groups: ['prodappadmin', 'corpappadmin']
+  - username: appadmin2
+    uid: 3005
+    groups: ['prodappadmin', 'corpappadmin']
+  - username: appadmin3
+    uid: 3006
+    groups: ['prodappadmin', 'corpappadmin']
+
+  - username: developer1
+    uid: 3007
+    groups: ['dev']
+  - username: developer2
+    uid: 3008
+    groups: ['dev']
+  - username: developer3
+    uid: 3009
+    groups: ['dev']
+
+  - username: test1
+    uid: 3010
+    groups: ['test']
+  - username: test2
+    uid: 3011
+    groups: ['test']
+  - username: test3
+    uid: 3012
+    groups: ['test']
+
+  - username: appadmin4
+    uid: 3013
+    groups: ['corpappadmin']
+  - username: appadmin5
+    uid: 3014
+    groups: ['corpappadmin']
+  - username: appadmin6
+    uid: 3015
+    groups: ['corpappadmin']
+
+  - username: developer4
+    uid: 3016
+    groups: ['dev']
+  - username: developer5
+    uid: 3017
+    groups: ['dev']
+  - username: developer6
+    uid: 3018
+    groups: ['dev']
+  - username: developer7
+    uid: 3019
+    groups: ['dev']
+  - username: developer8
+    uid: 3020
+    groups: ['dev']
+  - username: developer9
+    uid: 3021
+    groups: ['dev']
+  - username: developer10
+    uid: 3022
+    groups: ['dev']
+  - username: developer11
+    uid: 3023
+    groups: ['dev']
+  - username: developer12
+    uid: 3024
+    groups: ['dev']
+  - username: developer13
+    uid: 3025
+    groups: ['dev']
+  - username: developer14
+    uid: 3026
+    groups: ['dev']
+  - username: developer15
+    uid: 3027
+    groups: ['dev']
+  - username: developer16
+    uid: 3028
+    groups: ['dev']
+  - username: developer17
+    uid: 3029
+    groups: ['dev']
+  - username: developer18
+    uid: 3030
+    groups: ['dev']
+  - username: developer19
+    uid: 3031
+    groups: ['dev']
+  - username: developer20
+    uid: 3032
+    groups: ['dev']
+
+  - username: test4
+    uid: 3033
+    groups: ['test']
+  - username: test5
+    uid: 3034
+    groups: ['test']
+  - username: test6
+    uid: 3035
+    groups: ['test']
+  - username: test7
+    uid: 3036
+    groups: ['test']
+  - username: test8
+    uid: 3037
+    groups: ['test']
+  - username: test9
+    uid: 3038
+    groups: ['test']
+  - username: test10
+    uid: 3039
+    groups: ['test']
+
+  - username: support1
+    uid: 3040
+    groups: ['support']
+  - username: support2
+    uid: 3041
+    groups: ['support']
+  - username: support3
+    uid: 3042
+    groups: ['support']
+  - username: support4
+    uid: 3043
+    groups: ['support']
+  - username: support5
+    uid: 3044
+    groups: ['support']
+  - username: support6
+    uid: 3045
+    groups: ['support']
+  - username: support7
+    uid: 3046
+    groups: ['support']
+
+  - username: release1
+    uid: 3047
+    groups: ['release']
+  - username: release2
+    uid: 3048
+    groups: ['release']
+  - username: release3
+    uid: 3049
+    groups: ['release']
+
+  - username: infraops
+    uid: 3050
+    shell: /usr/sbin/nologin
+    groups: ['infraops']
+
+  - username: oncall1
+    uid: 3051
+    groups: ['sre']
+  - username: oncall2
+    uid: 3052
+    groups: ['sre']
+  - username: oncall3
+    uid: 3053
+    groups: ['sre']
+  - username: oncall4
+    uid: 3054
+    groups: ['sre']

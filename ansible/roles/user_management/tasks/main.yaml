@@ -1,0 +1,24 @@
+---
+- name: Create groups needed by all users
+  ansible.builtin.group:
+    name: "{{ item.group }}"
+    gid: "{{ item.group_id }}"
+  loop: "{{ user_groups }}"
+
+- name: Create users required in specific environment
+  ansible.builtin.user:
+    name: "{{ item.username }}"
+    groups: "{{ item.groups }}"
+    uid: "{{ item.uid }}"
+    state: present
+  when: >
+        ('ops' in item.groups) or
+        ('infraops' in item.groups) or
+        ('release' in item.groups) or
+        ('prodappadmin' in item.groups and ansible_env_type in ['preprod', 'prod']) or
+        ('corpappadmin' in item.groups and ansible_env_type in ['dev', 'test', 'stage', 'uat']) or
+        ('dev' in item.groups and ansible_env_type in ['dev', 'test', 'stage', 'uat']) or
+        ('test' in item.groups and ansible_env_type in ['test', 'stage', 'uat'])  or
+        ('support' in item.groups and ansible_env_type in ['uat', 'preprod', 'prod'])   or
+        ('sre' in item.groups and ansible_env_type in ['preprod', 'prod'])
+  loop: "{{ users }}"

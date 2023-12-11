@@ -6,7 +6,7 @@ Kubernetes Archive
 Pending Items:
 1. authbind
 
-## Setup and Installation of the workstation development node
+## Setup and installation of the lab environment
 1. Install following packages:
     - pyenv
     - poetry
@@ -16,8 +16,18 @@ Setup local environment:<br>
         `pyenv virtualenv-create devops-tools`<br>
         `pyenv activate devops-tools`<br>
         `poetry install`<br>
-1. Check connectivity with the homelab server:<br>
-`ansible-inventory --graph -i ansible/environments/01-homelab.yaml`<br>
-`ansible -i ansible/environments/01-homelab.yaml all -m ping`
+        `cp ansible/vars/lab_servers.yaml.sample ansible/vars/lab_servers.yaml`
+1. Update the lab server IP address in the file:
+    > ansible/environments/01-homelab.yaml
+1. Enable Wake-On-Boot for the lab server. <br>
+    Update the MAC address of the lab server in the file:
+    > ansible/vars/lab_servers.yaml
+1. Check if homelab server is showing up in the inventory:<br>
+`ansible-inventory --graph -i ansible/environments/01-homelab.yaml`
 1. Setup the workstation node using the following command:<br>
 `ansible-playbook -i ansible/environments/01-homelab.yaml ansible/playbooks/homelab.yaml`
+
+
+
+
+<!-- `ansible -i ansible/environments/01-homelab.yaml all -m ping` -->

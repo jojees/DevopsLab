@@ -22,6 +22,9 @@ keyed_groups:
   - key: environment_placement
     prefix: ""
     separator: ""
+  - key: environment_group
+    prefix: ""
+    separator: ""
   - key: container_service
     prefix: "service"
     separator: "_"
@@ -30,6 +33,7 @@ compose:
   # container_platform_version: docker_config.Image | split(':') | last | replace('-', '.')
   container_platform_pretty_name: docker_config.Image | pplatform_family
   environment_placement: docker_hostconfig.NetworkMode | penvironment_placement
+  environment_group: docker_config.Labels["environment_group"]
   environment_name: docker_hostconfig.NetworkMode
   application_age: docker_config.Labels["application.age"]
   application_group: docker_config.Labels["application.group"]

@@ -1,0 +1,22 @@
+---
+# TODO: Start the docker containers belonging to the lab infrastructures using the playbook.
+# - hosts: localhost
+#   tasks:
+#     - name: Start the lab environment
+#       community.docker.docker_compose:
+#         build: true
+#         project_src: /Users/jojijohny/Data/repos/DevopsLab
+#         files:
+#           - ubuntu.yaml
+#           - compose-environment-dev.yaml
+#         project_name: dev
+
+- hosts: lab
+  tasks:
+    - name: Setting Ansible extra var env_type based on environment variable
+      set_fact:
+        ansible_env_type: "{{ ansible_env.env_type }}"
+
+    - name: Setup user and group accounts on the instances
+      ansible.builtin.include_role:
+        name: user_management

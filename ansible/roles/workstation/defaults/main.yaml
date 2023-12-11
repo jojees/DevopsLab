@@ -1,3 +1,4 @@
 ---
 workstation_packages:
   - esolitos/ipa/sshpass
+  - lxc

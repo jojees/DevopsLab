@@ -2,16 +2,25 @@ version: "3.9"
 
 services:
   ubuntu20:
+    hostname: preprod01
+    environment:
+      env_type: preprod
     networks:
-      - preprod 
+      - preprod
 
   ubuntu22:
+    hostname: preprod02
+    environment:
+      env_type: preprod
     networks:
-      - preprod 
+      - preprod
 
   ubuntu18:
+    hostname: preprod03
+    environment:
+      env_type: preprod
     networks:
-      - preprod 
+      - preprod
 
 networks:
   preprod:

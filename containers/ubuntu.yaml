@@ -10,6 +10,7 @@ services:
         application.age: "moderate"
         maintenance.owner: "Engineering"
         billing.owner: "Engineering"
+        environment_group: "lab"
       context: .
       dockerfile: Dockerfile-ubuntu20
 
@@ -22,6 +23,7 @@ services:
         application.age: "low"
         maintenance.owner: "Engineering"
         billing.owner: "Engineering"
+        environment_group: "lab"
       context: .
       dockerfile: Dockerfile-ubuntu22
     stop_grace_period: 1s
@@ -35,5 +37,6 @@ services:
         application.age: "high"
         maintenance.owner: "Engineering"
         billing.owner: "Engineering"
+        environment_group: "lab"
       context: .
       dockerfile: Dockerfile-ubuntu18

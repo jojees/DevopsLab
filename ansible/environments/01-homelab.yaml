@@ -4,6 +4,7 @@ labservers:
       ansible_host: 192.168.2.3
       ansible_user: joji
       ansible_password: joji
+      ansible_become_password: joji
   vars:
     ansible_connection: ssh
 workstation:

@@ -1,0 +1,5 @@
+---
+nodes:
+  - name: serverXX.example.local
+    ipaddress: '192.168.0.1'
+    mac_address: 'XX:XX:XX:XX:XX:XX'

@@ -139,7 +139,15 @@ build
 # Ignore logs.
 containers/ansible.log
 
-# MacOs 
+# Ansible ignores
+ansible/vars/lab_servers.yaml
+secrets/**
+ansible/playbooks/test.yaml
+ansible/playbooks/testvm.yaml
+ansible/playbooks/testutm.yaml
+ansible/environments/04-utm.yaml
+
+# MacOs
 .DS_Store
 
 # VsCode files

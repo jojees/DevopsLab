@@ -1,6 +1,85 @@
 ---
-- name: Configure workstation
+- name: Configure workstation and start lab servers
   hosts: localhost
-
+  gather_facts: false
   roles:
     - workstation
+  tasks:
+    - name: Include lab server configurations
+      ansible.builtin.include_vars:
+        dir: ../vars
+        files_matching: lab_servers.yaml
+        ignore_unknown_extensions: true
+        name: servers
+
+    - name: Check if the servers are online
+      ansible.builtin.wait_for:
+        connect_timeout: 2
+        delay: 1
+        host: "{{ item }}"
+        port: 22
+        sleep: 2
+        timeout: 5
+      loop: "{{ servers | community.general.json_query(servers_ipaddress_query) | list }}"
+      vars:
+        servers_ipaddress_query: "nodes[*].ipaddress"
+      delegate_to: localhost
+      register: server_status
+      ignore_errors: true
+      changed_when: server_status.failed
+
+    - name: Start the lab servers through Wake-On-LAN
+      ansible.builtin.include_role:
+        name: wakeonlan
+      vars:
+        wakeonlan_mac_addresses: "{{ servers | community.general.json_query('nodes[*].mac_address') }}"
+      when: server_status.failed | default(false)
+
+    - name: Wait until servers are online to proceed
+      ansible.builtin.wait_for:
+        connect_timeout: 3
+        delay: 60
+        host: "{{ item }}"
+        port: 22
+        sleep: 5
+        timeout: 120
+      loop: "{{ servers | community.general.json_query(servers_ipaddress_query) | list }}"
+      vars:
+        servers_ipaddress_query: "nodes[*].ipaddress"
+      delegate_to: localhost
+      when: server_status.failed | default(false)
+
+- name: Configure the lab server
+  hosts: server01.jojees.local
+  gather_facts: true
+  become: true
+
+  roles:
+    - packages
+
+  tasks:
+    - name: Install LXD using snap
+      community.general.snap:
+        name: lxd
+        channel: "5.0/stable"
+
+    - name: Add user to LXD group
+      ansible.builtin.user:
+        name: "{{ ansible_ssh_user }}"
+        append: true
+        groups: lxd
+      # become: true
+
+    - name: Setup the seed file
+      ansible.builtin.template:
+        src: ../files/lxdinit.j2
+        dest: /tmp/lxdseed.yaml
+        owner: "{{ ansible_user }}"
+        mode: '0644'
+
+    - name: Initialize lxd environment
+      ansible.builtin.shell:
+        cmd: cat /tmp/lxdseed.yaml | lxd init --preseed
+
+# - name: Install and configure grafana instance
+#   hosts: localhost
