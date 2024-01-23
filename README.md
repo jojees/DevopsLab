@@ -1,5 +1,5 @@
-# kubernetes
-Kubernetes Archive
+# DevOps Lab
+Environment to practise DevOps tools. Setting up and configuring VM's, using LXC to host various tools & services needed to maintain a production like environment.
 
 
 ## Ansible
