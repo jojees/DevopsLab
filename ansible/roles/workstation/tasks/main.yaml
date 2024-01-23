@@ -6,4 +6,4 @@
     update_homebrew: true
 
 - name: Installing Ansible Collections using requirements.yml
-  community.buitin.command: ansible-galaxy collection install -r ../requirements.yaml
+  ansible.builtin.command: ansible-galaxy collection install -r ../requirements.yaml
