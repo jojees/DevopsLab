@@ -56,6 +56,15 @@ repos:
       files: ^(.*/)?poetry\.lock$
       args: ["-f", "requirements.txt", "-o", "requirements.txt", "--without-hashes"]
 
+    - id: poetry-export-dev
+      name: poetry-export dev
+      description: run poetry export to sync lock file with requirements-dev.txt
+      entry: poetry export
+      language: python
+      pass_filenames: false
+      files: ^(.*/)?poetry\.lock$
+      args: ["-f", "requirements.txt", "-o", "requirements-dev.txt", "--without-hashes", "--with", "dev,test"]
+
     - id: poetry-install
       name: poetry-install
       description: run poetry install to install dependencies from the lock file
