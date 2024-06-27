@@ -31,6 +31,7 @@ Setup local environment:<br>
 ## Notes for using this repo for development
 1. When updating the requirements.txt, make sure to use the following command:
   `poetry export --without-hashes --format=requirements.txt > requirements.txt`
+  `poetry export --with dev,test --without-hashes --format=requirements.txt > requirements-dev.txt`
 
 
 <!-- `ansible -i ansible/environments/01-homelab.yaml all -m ping` -->

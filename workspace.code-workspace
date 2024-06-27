@@ -5,12 +5,12 @@
 		}
 	],
 	"settings": {
-		"python.defaultInterpreterPath": "~/.pyenv/versions/3.10.5/envs/ansible/bin/python",
+		"python.defaultInterpreterPath": "~/.pyenv/versions/3.12.0/envs/devops_repo/bin/python",
 		"ansible.ansible.reuseTerminal": false,
-		"ansible.ansible.path": "~/.pyenv/versions/3.10.5/envs/ansible/bin/ansible",
-		"ansible.python.interpreterPath": "~/.pyenv/versions/3.10.5/envs/ansible/bin/python",
+		"ansible.ansible.path": "~/.pyenv/versions/3.12.0/envs/devops_repo/bin/ansible",
+		"ansible.python.interpreterPath": "~/.pyenv/versions/3.12.0/envs/devops_repo/bin/python",
 		"ansible.validation.lint.path": "~/.pyenv/shims/ansible-lint",
-		"ansible.ansibleNavigator.path": "~/.pyenv/versions/3.10.5/envs/ansible/bin/ansible-navigator",
+		"ansible.ansibleNavigator.path": "~/.pyenv/versions/3.12.0/envs/devops_repo/bin/ansible-navigator",
 
 		// "terminal.integrated.profiles.osx": {
 		// 	"pyenv": {
