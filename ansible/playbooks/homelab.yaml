@@ -79,7 +79,11 @@
 
     - name: Initialize lxd environment
       ansible.builtin.shell:
-        cmd: cat /tmp/lxdseed.yaml | lxd init --preseed
+        cmd: set -o pipefail && cat /tmp/lxdseed.yaml | lxd init --preseed
+        executable: /bin/bash
+      register: my_output
+      changed_when: my_output.rc != 0
+
 
 # - name: Install and configure grafana instance
 #   hosts: localhost

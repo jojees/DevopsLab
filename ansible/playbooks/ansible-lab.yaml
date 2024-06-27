@@ -12,9 +12,10 @@
 #         project_name: dev
 
 - hosts: lab
+  name: Lab environment for ansible testing
   tasks:
     - name: Setting Ansible extra var env_type based on environment variable
-      set_fact:
+      ansible.builtin.set_fact:
         ansible_env_type: "{{ ansible_env.env_type }}"
 
     - name: Setup user and group accounts on the instances
