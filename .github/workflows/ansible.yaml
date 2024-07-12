@@ -1,2 +1,32 @@
-# name: Ansible Workflow
-# # run-name:
+name: Ansible
+
+on:
+  push:
+    paths:
+      - 'ansible/**'
+    branches:
+      - main
+      # - development
+  merge_group:
+  pull_request:
+    paths-ignore:
+      - ".vscode/**"
+      - "**/*.md"
+      - ".github/ISSUE_TEMPLATE/**"
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  Linter:
+    name: Linter Checks
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Display Python Version
+        run: python -c "import sys; print(sys.version)"
+      # - name:
