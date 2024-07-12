@@ -37,9 +37,11 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install poetry
           poetry install
+      - name: Display Versions
+        run: |
+          python -V
+          poetry -V
+          ansible --version
+      - name: Run ansible-lint
+        run: |
           poetry run ansible-lint
-
-
-      - name: Display Python Version
-        run: python -c "import sys; print(sys.version)"
-      # - name:
