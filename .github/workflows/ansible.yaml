@@ -35,7 +35,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python3 -m pip install --upgrade pip
-          python 3 -m pip install poetry
+          python3 -m pip install poetry
           poetry install
           ansible-lint
 
