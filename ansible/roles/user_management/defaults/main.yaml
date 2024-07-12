@@ -1,7 +1,7 @@
 ---
 # Add more default groups as needed and please make sure that new
 # groups are appended below while incrementing their GID.
-user_groups:
+user_management_user_groups:
   - group: ops
     group_id: 2001
   - group: dev
@@ -23,7 +23,7 @@ user_groups:
 
 # Add more users as needed and please make sure that new
 # users are appended below while incrementing their UID.
-users:
+user_management_users:
   - username: ops1
     uid: 3001
     groups: ['ops']

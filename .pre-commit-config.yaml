@@ -28,7 +28,13 @@ repos:
     rev: v24.6.1
     hooks:
       - id: ansible-lint
-        files: \.(yaml|yml)$
+        # do not pass files to ansible-lint, see:
+        # https://github.com/ansible/ansible-lint/issues/611
+        # files: \.(yaml|yml)$
+        pass_filenames: false
+        entry: ansible-lint --force-color .
+        language: python
+        always_run: true
   - repo: local
     hooks:
     - id: poetry-check

@@ -11,8 +11,8 @@
 #           - compose-environment-dev.yaml
 #         project_name: dev
 
-- hosts: lab
-  name: Lab environment for ansible testing
+- name: Lab environment for ansible testing
+  hosts: lab
   tasks:
     - name: Setting Ansible extra var env_type based on environment variable
       ansible.builtin.set_fact:

@@ -3,7 +3,7 @@
   ansible.builtin.group:
     name: "{{ item.group }}"
     gid: "{{ item.group_id }}"
-  loop: "{{ user_groups }}"
+  loop: "{{ user_management_user_groups }}"
 
 - name: Create users required in specific environment
   ansible.builtin.user:
@@ -21,4 +21,4 @@
         ('test' in item.groups and ansible_env_type in ['test', 'stage', 'uat'])  or
         ('support' in item.groups and ansible_env_type in ['uat', 'preprod', 'prod'])   or
         ('sre' in item.groups and ansible_env_type in ['preprod', 'prod'])
-  loop: "{{ users }}"
+  loop: "{{ user_management_users }}"
