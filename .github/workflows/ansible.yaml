@@ -44,4 +44,4 @@ jobs:
           ansible --version
       - name: Run ansible-lint
         run: |
-          poetry run ansible-lint
+          poetry run ansible-lint -vvvv
