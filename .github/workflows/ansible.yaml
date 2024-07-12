@@ -6,7 +6,7 @@ on:
       - 'ansible/**'
     branches:
       - main
-      # - development
+      - development
   merge_group:
   pull_request:
     paths-ignore:
