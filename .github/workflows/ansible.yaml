@@ -42,6 +42,7 @@ jobs:
           python -V
           poetry -V
           ansible --version
+          ansible-lint --version
       - name: Run ansible-lint
         run: |
           poetry run ansible-lint -v
