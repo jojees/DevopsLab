@@ -38,7 +38,7 @@
           - ubuntu.yaml
           - compose-environment-test.yaml
 
-    - name: Stop Docker Compose
+    - name: Stop Docker Compose based lab
       tags:
         - terminate-lab
         - never
