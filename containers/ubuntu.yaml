@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   ubuntu20:
     image: jojees/ubuntu:20.04
@@ -12,7 +10,7 @@ services:
         billing.owner: "Engineering"
         environment_group: "lab"
       context: .
-      dockerfile: Dockerfile-ubuntu20
+      dockerfile: Dockerfile-ubuntu20.04
 
   ubuntu22:
     image: jojees/ubuntu:22.04
@@ -25,18 +23,33 @@ services:
         billing.owner: "Engineering"
         environment_group: "lab"
       context: .
-      dockerfile: Dockerfile-ubuntu22
+      dockerfile: Dockerfile-ubuntu22.04
     stop_grace_period: 1s
 
-  ubuntu18:
-    image: jojees/ubuntu:18.04
+  ubuntu23:
+    image: jojees/ubuntu:23.04
     tty: True
     build:
       labels:
         application.group: "vanilla"
-        application.age: "high"
+        application.age: "low"
         maintenance.owner: "Engineering"
         billing.owner: "Engineering"
         environment_group: "lab"
       context: .
-      dockerfile: Dockerfile-ubuntu18
+      dockerfile: Dockerfile-ubuntu23.04
+    stop_grace_period: 1s
+
+  ubuntu24:
+    image: jojees/ubuntu:24.04
+    tty: True
+    build:
+      labels:
+        application.group: "vanilla"
+        application.age: "low"
+        maintenance.owner: "Engineering"
+        billing.owner: "Engineering"
+        environment_group: "lab"
+      context: .
+      dockerfile: Dockerfile-ubuntu24.04
+    stop_grace_period: 1s

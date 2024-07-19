@@ -1,39 +1,36 @@
-version: "3.9"
-
 services:
   ubuntu20:
-    hostname: test01
+    hostname: test20
     environment:
       env_type: test
     build:
       labels:
         evironment_owner: "qa"
         billing.owner: "qa-goverance"
-    networks:
-      - test
 
   ubuntu22:
-    hostname: test02
+    hostname: test22
     environment:
       env_type: test
     build:
       labels:
         evironment_owner: "qa"
         billing.owner: "qa-goverance"
-    networks:
-      - test
 
-  ubuntu18:
-    hostname: test03
+  ubuntu23:
+    hostname: test23
     environment:
       env_type: test
     build:
       labels:
         evironment_owner: "qa"
         billing.owner: "qa-goverance"
-    networks:
-      - test
 
-networks:
-  test:
-    name: test
+  ubuntu24:
+    hostname: test24
+    environment:
+      env_type: test
+    build:
+      labels:
+        evironment_owner: "qa"
+        billing.owner: "qa-goverance"

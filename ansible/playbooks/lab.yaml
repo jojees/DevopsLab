@@ -1,0 +1,65 @@
+---
+- name: Launch the lab environment
+  hosts: localhost
+  gather_facts: false
+  # become: true
+
+  # roles:
+  #   - system_defaults
+
+  tasks:
+    - name: Ensure Docker Desktop is running
+      block:
+        - name: Check if Docker Desktop is running on macOS
+          ansible.builtin.command: docker stats --no-stream
+          register: docker_stats
+          ignore_errors: true
+          changed_when: false
+
+        - name: Start Docker Desktop if not running
+          ansible.builtin.command: open -a "Docker Desktop"
+          when: docker_stats.rc != 0
+          changed_when: true
+
+        - name: Confirm that Docker Desktop is running
+          ansible.builtin.command: docker stats --no-stream
+          when: docker_stats.rc != 0
+          register: docker_confirmation
+          changed_when: false
+          retries: 10
+          delay: 2
+          until: docker_confirmation.rc == 0
+
+    - name: Start Docker Compose for test environment
+      community.docker.docker_compose_v2:
+        project_name: test
+        project_src: ../../containers
+        files:
+          - ubuntu.yaml
+          - compose-environment-test.yaml
+
+    - name: Stop Docker Compose
+      tags:
+        - terminate-lab
+        - never
+      block:
+        - name: Stop test environment
+          community.docker.docker_compose_v2:
+            project_name: test
+            project_src: ../../containers/localhost_lab
+            files:
+              - ubuntu.yaml
+              - compose-environment-test.yaml
+            state: absent
+
+        - name: Remove stopped containers
+          ansible.builtin.command: docker container prune -f
+          register: docker_prune
+          changed_when: docker_prune.stdout != ''
+          failed_when: docker_prune.rc != 0
+
+        - name: Stop Docker Desktop
+          ansible.builtin.command: killall "Docker Desktop"
+          register: stop_docker_desktop
+          changed_when: false
+          failed_when: stop_docker_desktop.rc != 0
