@@ -14,14 +14,14 @@ requests = "^2.32.3"
 
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "^3.4.0"
-ansible-lint = { version = "^6.20.0", markers = "platform_system != 'Windows'" }
+pre-commit = "^3.7.1"
+ansible-lint = { version = "^24.6.1", markers = "platform_system != 'Windows'" }
 
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.4.2"
 flake8 = "^6.1.0"
-black = "^23.9.1"
+black = "^24.3.0"
 
 
 [tool.poetry.group.build.dependencies]

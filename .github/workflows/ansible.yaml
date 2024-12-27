@@ -1,0 +1,48 @@
+name: Ansible
+
+on:
+  push:
+    paths:
+      - 'ansible/**'
+    branches:
+      - main
+      - development
+  merge_group:
+  pull_request:
+    paths-ignore:
+      - ".vscode/**"
+      - "**/*.md"
+      - ".github/ISSUE_TEMPLATE/**"
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  Linter:
+    name: Linter Checks
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v2.3.2
+        with:
+          python-version: '3.12.0'
+          cache: 'pip'
+      - name: Install Dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install poetry
+          poetry install
+      - name: Display Versions
+        run: |
+          python -V
+          poetry -V
+          ansible --version
+          poetry run ansible-lint --version
+      - name: Run ansible-lint
+        run: |
+          poetry run ansible-lint -v
