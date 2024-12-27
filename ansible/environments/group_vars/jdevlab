@@ -1,0 +1,10 @@
+service_containers:
+  - name: "mycontainer"
+    alias: "22.04"
+  - name: "dnsbind9"
+    alias: "24.04"
+  - name: "mail1"
+    alias: "24.04"
+
+lxd_remote_name: jdevlabcluster
+ansible_container_connection: lxd

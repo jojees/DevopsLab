@@ -1,0 +1,2 @@
+- name: Execute DNS client configuration
+  include_tasks: dns-client.yaml

@@ -81,5 +81,20 @@
       ansible.builtin.shell:
         cmd: cat /tmp/lxdseed.yaml | lxd init --preseed
 
-# - name: Install and configure grafana instance
-#   hosts: localhost
+    - name: Launch Prometheus and Grafana server
+      community.general.lxd_container:
+        name: prometheus2
+        state: started
+        source:
+          type: image
+          mode: pull
+          server: https://cloud-images.ubuntu.com/releases
+          protocol: simplestreams
+          alias: "22.04"
+        config:
+          user.component: prometheus
+          environment.SERVICE_NAME: MONITORING
+        profiles: ["general"]
+        wait_for_ipv4_addresses: true
+        timeout: 600
+

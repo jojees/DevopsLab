@@ -1,0 +1,16 @@
+$TTL 604800
+@       IN      SOA     jdev.lab. root.jdev.lab. (
+                            2         ; Serial
+                            604800    ; Refresh
+                            86400     ; Retry
+                            2419200   ; Expire
+                            604800 )  ; Negative Cache TTL
+;
+@       IN      NS      jdev.lab.
+{{ (bind_ip | split('.')).3 }}      IN      PTR     ns1.jdev.lab.
+
+{{ (mx_ip | split('.')).3 }}      IN      PTR     mail1.jdev.lab.
+
+101     IN      PTR     monitor01.jdev.lab.
+102     IN      PTR     monitor02.jdev.lab.
+103     IN      PTR     app01.jdev.lab.

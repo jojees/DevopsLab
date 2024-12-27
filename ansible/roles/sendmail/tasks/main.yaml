@@ -1,0 +1,41 @@
+---
+- name: Install Sendmail and Dovecot
+  apt:
+    name:
+      - sendmail
+      - dovecot-pop3d
+    state: present
+
+
+# - name: Configure Sendmail
+#   template:
+#     src: sendmail.mc.j2
+#     dest: /etc/mail/sendmail.mc
+
+# - name: Compile Sendmail Configuration
+#   shell: "m4 /etc/mail/sendmail.mc > /etc/mail/sendmail.cf"
+#   register: sendmail_compile
+#   changed_when: sendmail_compile.rc == 0
+#   failed_when: sendmail_compile.rc != 0
+
+# - name: Restart Sendmail service
+#   systemd:
+#     name: sendmail
+#     state: restarted
+
+# - name: Configure Dovecot
+#   lineinfile:
+#     path: /etc/dovecot/dovecot.conf
+#     line: "protocols = pop3"
+#     create: yes
+
+# - name: Restart Dovecot service
+#   systemd:
+#     name: dovecot
+#     state: restarted
+
+# - name: Create test user
+#   user:
+#     name: testuser
+#     password: "{{ 'testpassword' | password_hash('sha512') }}"
+#     state: present

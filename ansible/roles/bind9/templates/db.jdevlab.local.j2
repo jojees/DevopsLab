@@ -1,0 +1,20 @@
+$TTL 604800
+@       IN      SOA     ns1 info (
+                            5         ; Serial
+                            604800    ; Refresh
+                            86400     ; Retry
+                            2419200   ; Expire
+                            604800 )  ; Negative Cache TTL
+; name server RR for the domain
+@       IN      NS      ns1.jdev.lab.
+
+; return the IPv4 address of name servers.
+ns1      IN      A       {{ bind_ip }}
+
+; return the IPv4 address of mail servers
+jdev.lab.      IN      MX    10  mail1
+mail1         IN      A       {{ mx_ip }}
+
+monitor01  IN  A       192.168.1.101
+monitor02  IN  A       192.168.1.102
+app01      IN  A       192.168.1.103

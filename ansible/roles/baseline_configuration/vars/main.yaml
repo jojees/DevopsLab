@@ -1,0 +1,1 @@
+dns_server_ip: "{{ hostvars['CONTAINERS_IP_HOLDER']['container_ips']['dnsbind9'] | default('') }}"

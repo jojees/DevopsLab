@@ -19,7 +19,7 @@ storage_pools:
   driver: btrfs
 profiles:
 - config: {}
-  description: ""
+  description: "Default profile"
   devices:
     eth0:
       name: eth0
@@ -30,5 +30,29 @@ profiles:
       pool: default
       type: disk
   name: default
+- config:
+    cloud-init.vendor-data: |
+      #cloud-config
+      package_update: true
+      package_upgrade: true
+      apt_reboot_if_required: true
+      packages:
+        - python3
+        - python3-pip
+        - python-is-python3
+      ansible:
+        package_name: ansible-core
+        install_method: pip
+  description: "General profile"
+  devices:
+    eth0:
+      name: eth0
+      network: lxdbr0
+      type: nic
+    root:
+      path: /
+      pool: default
+      type: disk
+  name: general
 projects: []
 cluster: null

@@ -1,4 +1,0 @@
----
-user_groups_with_sudo_privilage:
-  - qa
-  - release

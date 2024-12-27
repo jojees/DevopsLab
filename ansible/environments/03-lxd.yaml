@@ -1,9 +1,11 @@
 plugin: community.general.lxd
 # url: "https://192.168.2.3:9999"
-url: "https://server01.jojees.local:9999"
+url: "https://192.168.1.160:8443"
+# server_check_hostname: false
+# url: "https://server01.jojees.local:9999"
 type_filter: both
-client_cert: "/Users/jojijohny/Data/repos/DevopsLab/secrets/certs/workstation.jojees.local/workstation.jojees.local.crt"
-client_key: "/Users/jojijohny/Data/repos/DevopsLab/secrets/certs/workstation.jojees.local/workstation.jojees.local.key"
+# client_cert: "/Users/jojijohny/Data/repos/DevopsLab/secrets/certs/workstation.jojees.local/workstation.jojees.local.crt"
+# client_key: "/Users/jojijohny/Data/repos/DevopsLab/secrets/certs/workstation.jojees.local/workstation.jojees.local.key"
 state: RUNNING
 ansible_connection: lxd
 # ansible_user: root
