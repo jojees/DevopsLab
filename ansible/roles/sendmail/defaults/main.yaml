@@ -1,2 +1,2 @@
-wakeonlan_mac_addresses:
+sendmail_mac_addresses:
   - 'XX:XX:XX:XX:XX:XX'

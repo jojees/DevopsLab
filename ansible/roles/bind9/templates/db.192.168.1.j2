@@ -7,9 +7,9 @@ $TTL 604800
                             604800 )  ; Negative Cache TTL
 ;
 @       IN      NS      jdev.lab.
-{{ (bind_ip | split('.')).3 }}      IN      PTR     ns1.jdev.lab.
+{{ (bind9_bind_ip | split('.')).3 }}      IN      PTR     ns1.jdev.lab.
 
-{{ (mx_ip | split('.')).3 }}      IN      PTR     mail1.jdev.lab.
+{{ (bind9_mx_ip | split('.')).3 }}      IN      PTR     mail1.jdev.lab.
 
 101     IN      PTR     monitor01.jdev.lab.
 102     IN      PTR     monitor02.jdev.lab.

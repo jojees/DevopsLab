@@ -4,7 +4,7 @@
   tags: always
   tasks:
     - name: Install provisioning dependencies
-      apt:
+      ansible.builtin.apt:
         name: python3-lxc
         state: present
 
@@ -28,7 +28,7 @@
       run_once: true
 
     - name: Add containers to inventory
-      add_host:
+      ansible.builtin.add_host:
         name: "{{ item.item.name }}"
         groups: containers
         ansible_connection: "{{ ansible_container_connection }}"
@@ -37,13 +37,13 @@
 
     - name: Set IP addresses of all containers as facts
       ansible.builtin.set_fact:
-        container_ips: "{{ container_ips | default({}) | combine({ item.item.name: item.addresses.eth0[0] }) }}"
+        container_ips: "{{ container_ips | default({}) | combine({ item.item.name: item.addresses.eth0[0]}) }}"
       loop: "{{ service_containers_results.results }}"
       when: item.addresses | length > 0
       run_once: true
 
     - name: Add containers IPv4 address's to a dummy host variable
-      add_host:
+      ansible.builtin.add_host:
         name: "CONTAINERS_IP_HOLDER"
         container_ips: "{{ container_ips }}"
 
@@ -67,7 +67,7 @@
   hosts: dnsbind9
   gather_facts: false
   become: true
-  tags: 
+  tags:
     - bind9
   roles:
     - role: bind9
@@ -76,7 +76,7 @@
 #   hosts: mail1
 #   gather_facts: false
 #   become: true
-#   tags: 
+#   tags:
 #     - sendmail
 #   roles:
 #     - role: sendmail

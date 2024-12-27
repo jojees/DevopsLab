@@ -1,35 +1,35 @@
 # tasks/dns-client.yaml
 
 - name: Ensure systemd-resolved is installed
-  package:
+  ansible.builtin.package:
     name: systemd
     state: present
   register: resolved_package
 
 - name: Check the status of systemd-resolved
-  command: systemctl is-active systemd-resolved
+  ansible.builtin.command: systemctl is-active systemd-resolved
   register: resolved_status
   ignore_errors: true
 
 - name: Enable and start systemd-resolved if not running
-  systemd:
+  ansible.builtin.systemd:
     name: systemd-resolved
     state: started
     enabled: true
   when: resolved_status.rc != 0
 
 - name: Configure DNS in resolved.conf
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/systemd/resolved.conf
     block: |
       [Resolve]
-      DNS={{ dns_server_ip }}
+      DNS={{ baseline_configuration_dns_server_ip }}
       Domains=~jdev.lab
   register: dns_config
   when: dns_server_ip != ''
 
 - name: Restart systemd-resolved to apply changes
-  systemd:
+  ansible.builtin.systemd:
     name: systemd-resolved
     state: restarted
   when: dns_config.changed or resolved_package.changed

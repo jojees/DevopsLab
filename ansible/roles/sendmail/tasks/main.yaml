@@ -1,6 +1,6 @@
 ---
 - name: Install Sendmail and Dovecot
-  apt:
+  ansible.builtin.apt:
     name:
       - sendmail
       - dovecot-pop3d
