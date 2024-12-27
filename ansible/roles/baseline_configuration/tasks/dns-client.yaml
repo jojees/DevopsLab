@@ -26,7 +26,7 @@
       DNS={{ baseline_configuration_dns_server_ip }}
       Domains=~jdev.lab
   register: dns_config
-  when: dns_server_ip != ''
+  when: baseline_configuration_dns_server_ip != ''
 
 - name: Restart systemd-resolved to apply changes
   ansible.builtin.systemd:
