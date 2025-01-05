@@ -47,6 +47,15 @@
         name: "CONTAINERS_IP_HOLDER"
         container_ips: "{{ container_ips }}"
 
+- name: Setup bind9 for the lab
+  hosts: dnsbind9
+  gather_facts: false
+  become: true
+  tags:
+    - bind9
+  roles:
+    - role: bind9
+
 - name: Ensure python is installed on the containers
   hosts: containers
   gather_facts: false
@@ -62,15 +71,10 @@
       ansible.builtin.raw: apt-get install -y python3
       when: python_install_check.rc == 1
       changed_when: false
-
-- name: Setup bind9 for the lab
-  hosts: dnsbind9
-  gather_facts: false
-  become: true
-  tags:
-    - bind9
-  roles:
-    - role: bind9
+    
+    - name: Setup system level configs
+      ansible.builtin.include_role: 
+        name: baseline_configuration
 
 # - name: Setup sendmail and Dovecot for the lab
 #   hosts: mail1
@@ -81,11 +85,11 @@
 #   roles:
 #     - role: sendmail
 
-- name: Setup contianers system level configs
-  hosts: containers
-  gather_facts: false
-  roles:
-    - role: baseline_configuration
+# - name: Setup contianers system level configs
+#   hosts: containers
+#   gather_facts: false
+#   roles:
+#     - role: baseline_configuration
 
 - name: Stop the lab environment
   hosts: jdevlab
