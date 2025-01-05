@@ -22,10 +22,12 @@ Setup local environment:<br>
 1. Enable Wake-On-Boot for the lab server. <br>
     Update the MAC address of the lab server in the file:
     > ansible/vars/lab_servers.yaml
-1. Check if homelab server is showing up in the inventory:<br>
-`ansible-inventory --graph -i ansible/environments/01-homelab.yaml`
+1. Check if homelab server/cluster is showing up in the inventory:<br>
+`ansible-inventory --graph -i ansible/environments/01-lab.yaml`
 1. Setup the workstation node using the following command:<br>
 `ansible-playbook -i ansible/environments/01-homelab.yaml ansible/playbooks/homelab.yaml`
+1. Update the environment by launching the required containers and configure them using the following command:</br>
+`ansible-playbook -i ansible/environments/01-lab.yaml ansible/playbooks/lab.yaml`
 
 
 ## Notes for using this repo for development
