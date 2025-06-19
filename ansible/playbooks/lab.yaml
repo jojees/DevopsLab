@@ -2,7 +2,13 @@
 - name: Start required containers
   hosts: jdevlab
   tags: always
+  gather_facts: true
   tasks:
+    - name: Setup GlusterFS configurations on pi2 and pi3 nodes
+      ansible.builtin.include_role:
+        name: glusterfs_server
+      when: inventory_hostname not in ['pi1.jdevlab.local', 'pi3.jdevlab.local']
+
     - name: Install provisioning dependencies
       ansible.builtin.apt:
         name: python3-lxc

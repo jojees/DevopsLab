@@ -14,3 +14,6 @@ $TTL 604800
 101     IN      PTR     monitor01.jdev.lab.
 102     IN      PTR     monitor02.jdev.lab.
 103     IN      PTR     app01.jdev.lab.
+
+; Test Nodes
+{{ (bind9_mycontainer_ip | split('.')).3 }}     IN      PTR     mycontainer.jdev.lab.

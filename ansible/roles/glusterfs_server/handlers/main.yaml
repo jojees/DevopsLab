@@ -1,0 +1,3 @@
+---
+- name: Reload fstab
+  command: mount -o remount,ro /etc/fstab

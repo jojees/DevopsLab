@@ -1,6 +1,8 @@
 bind9_required_ips:
   - bind9_bind_ip
   - bind9_mx_ip
+  - bind9_mycontainer_ip
 
 bind9_bind_ip: "{{ hostvars['CONTAINERS_IP_HOLDER']['container_ips']['dnsbind9'] | default('') }}"
 bind9_mx_ip: "{{ hostvars['CONTAINERS_IP_HOLDER']['container_ips']['mail1'] | default('') }}"
+bind9_mycontainer_ip: "{{ hostvars['CONTAINERS_IP_HOLDER']['container_ips']['mycontainer'] | default('') }}"

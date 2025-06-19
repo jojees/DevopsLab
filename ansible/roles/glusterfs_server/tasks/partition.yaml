@@ -1,0 +1,79 @@
+---
+# - name: Gather disk facts
+#   setup:
+#     gather_subset:
+#       - hardware
+
+# - name: Debug ansible_facts
+#   debug:
+#     var: ansible_facts
+
+- name: Ensure partition exists on /dev/sda
+  shell: |
+    echo "label: gpt" | sfdisk /dev/sda
+    echo "/dev/sda1: size=50GB" | sfdisk --no-reread /dev/sda --quiet
+  when: >
+    (ansible_facts.disks['sda']['partitions'] is not defined or ansible_facts.disks['sda']['partitions'] | length == 0) or
+    (ansible_facts.disks['sda']['partitions'] | map(attribute='size') | sum < 50 * 1024 * 1024 * 1024)
+  # creates: /dev/sda1
+
+- name: Check if /dev/sda1 is formatted
+  shell: blkid -o value -s TYPE /dev/sda1 || true
+  register: partition_type_check
+  changed_when: false
+  # ignore_errors: true
+
+# - name: Format /dev/sda1 with ext4
+#   filesystem:
+#     fstype: ext4
+#     dev: /dev/sda1
+#   when: partition_type_check.rc != 0 
+
+- name: Format /dev/sda1 with ext4
+  command: mkfs.ext4 /dev/sda1
+  when: partition_type_check.stdout == ""
+  
+
+# - name: Assign label to the partition
+#   command: e2label /dev/sda1 {{ gluster_volume_name }}
+#   when: blkid -o value -s LABEL /dev/sda1 != "{{ gluster_volume_name }}"
+
+- name: Get the label of /dev/sda1
+  command: blkid -o value -s LABEL /dev/sda1
+  register: partition_label
+  changed_when: false  # This prevents this task from showing as changed
+
+- name: Set the desired volume label as a fact
+  set_fact:
+    desired_label: "{{ gluster_volume_name }}"
+
+- name: Assign label to the partition
+  command: e2label /dev/sda1 {{ gluster_volume_name }}
+  when: partition_label.stdout != desired_label
+
+- name: Ensure mount point exists
+  file:
+    path: "{{ gluster_mount_point }}"
+    state: directory
+
+- name: Check if /dev/sda1 is mounted
+  mount:
+    path: "{{ gluster_mount_point }}"
+    src: LABEL="{{ gluster_volume_name }}"
+    fstype: ext4
+    opts: defaults
+    state: mounted
+  changed_when: false
+
+- name: Check if the entry for the volume exists in /etc/fstab
+  set_fact:
+    fstab_check: "'LABEL={{ gluster_volume_name }}' not in lookup('file', '/etc/fstab')"
+
+- name: Ensure unique entry for jdev_lab_volume in /etc/fstab
+  lineinfile:
+    path: /etc/fstab
+    regexp: "^LABEL={{ gluster_volume_name }}"
+    line: "LABEL={{ gluster_volume_name }} {{ gluster_mount_point }} ext4 defaults 0 0"
+    state: present
+  notify: Reload fstab
+  when: fstab_check
