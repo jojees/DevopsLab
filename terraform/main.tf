@@ -91,9 +91,15 @@ resource "helm_release" "argocd" {
     value = "false"
   }
   # Use RAM for temporary Git repo clones
-  set {
+  # set {
+  #   name  = "repoServer.volumes"
+  #   value = "[{name: 'cmp-tmp', emptyDir: {}}]"
+  # }
+  set_list {
     name  = "repoServer.volumes"
-    value = "[{name: 'cmp-tmp', emptyDir: {}}]"
+    value = [
+      "{name: 'cmp-tmp', emptyDir: {}}"
+    ]
   }
 
   # 2. Configure Redis Eviction Policy (CRITICAL)
