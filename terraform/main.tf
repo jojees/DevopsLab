@@ -3,7 +3,7 @@ terraform {
   required_providers {
     helm       = { source = "hashicorp/helm", version = "~> 2.12" }
     kubernetes = { source = "hashicorp/kubernetes", version = "~> 2.25" }
-    argocd     = { source = "argoproj-labs/argocd", version = "~> 7.0" }
+    argocd     = { source = "argoproj-labs/argocd", version = "~> 7.0", core = true }
   }
 }
 
@@ -30,12 +30,6 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   create_namespace = true
   
-  # Crucial for slow ARM nodes:
-  timeout                    = 900   # Increase to 15 minutes
-  wait                       = false # Don't block the TF run waiting for pods to be 'Ready'
-  disable_openapi_validation = true  # Speeds up the initial API handshake
-  cleanup_on_fail            = true  # Automatically rolls back if it fails again
-
   # Crucial for slow ARM nodes:
   timeout                    = 900   # Increase to 15 minutes
   wait                       = false # Don't block the TF run waiting for pods to be 'Ready'
@@ -136,20 +130,25 @@ resource "helm_release" "argocd" {
   }
 }
 
-data "kubernetes_secret" "argocd_admin_pwd" {
-  depends_on = [helm_release.argocd]
-  metadata {
-    name      = "argocd-initial-admin-secret"
-    namespace = "argocd"
-  }
-}
+# data "kubernetes_secret" "argocd_admin_pwd" {
+#   depends_on = [helm_release.argocd]
+#   metadata {
+#     name      = "argocd-initial-admin-secret"
+#     namespace = "argocd"
+#   }
+# }
 
 # 2. The Provider uses the Data Source
+# provider "argocd" {
+#   server_addr = "argocd-server.argocd.svc.cluster.local:80"
+#   insecure    = true
+#   username    = "admin"
+#   password    = data.kubernetes_secret.argocd_admin_pwd.data["password"]
+# }
+
+# The Provider (No secret data source needed)
 provider "argocd" {
-  server_addr = "argocd-server.argocd.svc.cluster.local:80"
-  insecure    = true
-  username    = "admin"
-  password    = data.kubernetes_secret.argocd_admin_pwd.data["password"]
+  core = true
 }
 
 # 2. Bootstrap the "Root" App
