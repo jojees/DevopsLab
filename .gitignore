@@ -152,3 +152,14 @@ ansible/environments/04-utm.yaml
 
 # VsCode files
 .vscode/settings.json
+
+
+# Ignore sensitive terraform files
+**/.terraform/*
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.tfvars.json
+
+# Ignore local kubeconfigs
+kubeconfig

@@ -1,0 +1,51 @@
+name: Terraform Plan and Apply
+
+on:
+  push:
+    branches: [ main, "dev/**", dev ]
+  pull_request:
+    branches: [ main, master ]
+
+# Centralize your variables here
+env:
+  TF_WORKSPACE: "raspberrypis"
+  TF_ORG: "spectralsphinx777_homelab"
+  TF_DIRECTORY: "terraform" # Pointing to your HCL folder
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Upload Configuration
+        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
+        id: upload
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          directory: ${{ env.TF_DIRECTORY }}
+          organization: ${{ env.TF_ORG }}
+        env:
+          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+          
+      - name: Create Plan or Run
+        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.0.0
+        id: run
+        with:
+          workspace: ${{ env.TF_WORKSPACE }}
+          configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+          # Plan only if it's a PR or if we are on a dev branch
+          plan_only: ${{ github.event_name == 'pull_request'|| startsWith(github.ref, 'refs/heads/dev') }}
+        env:
+          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Apply Run
+        # ONLY apply if we are pushing/merging to main (master)
+        if: |
+          github.event_name == 'push' && 
+          (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+        uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.0
+        with:
+          run: ${{ steps.run.outputs.run_id }}
+        env:
+          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
