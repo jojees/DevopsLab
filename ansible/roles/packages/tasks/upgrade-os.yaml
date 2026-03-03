@@ -1,0 +1,19 @@
+---
+- name: Upgrade the OS
+  ansible.builtin.apt:
+    upgrade: dist
+    update_cache: true
+    autoclean: true
+    autoremove: true
+    clean: true
+
+- name: Check if server reboot is required
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+    follow: true
+  register: reboot_required
+
+- name: Rebooting the server
+  ansible.builtin.reboot:
+    reboot_timeout: 120
+  when: reboot_required.stat.exists

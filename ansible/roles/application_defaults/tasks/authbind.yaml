@@ -1,11 +1,11 @@
 ---
 - name: Authbind package to be installed.
-  apt:
+  ansible.builtin.apt:
     name: authbind
 
-- name: Create files for which needs to be bound.
-  file:
-    path:  "{{ '/etc/authbind/byport/' + item|string }}"
+- name: Create files which needs to be bound.
+  ansible.builtin.file:
+    path: "{{ '/etc/authbind/byport/' + item | string }}"
     owner: "{{ authbind.user }}"
     group: "{{ authbind.group }}"
     mode: '0700'

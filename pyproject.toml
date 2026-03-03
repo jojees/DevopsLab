@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "devopslab"
+version = "0.1.0"
+description = "DevOps Lab on homelab server01"
+authors = ["Jojees <joji@jojees.net>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12.5"
+ansible = "^10.5.0"
+jmespath = "^1.0.1"
+tox = "^4.11.4"
+requests = "^2.32.3"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.7.1"
+ansible-lint = { version = "^24.6.1", markers = "platform_system != 'Windows'" }
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.2"
+flake8 = "^6.1.0"
+black = "^24.3.0"
+
+
+[tool.poetry.group.build.dependencies]
+setuptools-scm = "^8.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.setuptools_scm]
+version_scheme = "pre-release"

@@ -1,4 +1,8 @@
 ---
-- include_tasks: package_update.yaml
-- include_tasks: vimrc.yaml
-# - include_tasks: bash.yaml
+- name: Install packages
+  ansible.builtin.include_tasks:
+    file: package_update.yaml
+
+- name: Update VIM
+  ansible.builtin.include_tasks:
+    file: vimrc.yaml

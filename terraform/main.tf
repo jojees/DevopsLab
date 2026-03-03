@@ -1,0 +1,91 @@
+# main.tf
+terraform {
+  required_providers {
+    helm = { source = "hashicorp/helm", version = "~> 2.12" }
+    kubernetes = { source = "hashicorp/kubernetes", version = "~> 2.25" }
+    argocd = { source  = "oboukili/argocd", version = "6.1.1" }
+  }
+}
+
+provider "kubernetes" {
+  host = "https://kubernetes.default.svc"
+  cluster_ca_certificate = file("/var/run/secrets/kubernetes.io/serviceaccount/ca.crt")
+  token                  = file("/var/run/secrets/kubernetes.io/serviceaccount/token")
+}
+
+provider "helm" {
+  kubernetes {
+    host = "https://kubernetes.default.svc"
+    cluster_ca_certificate = file("/var/run/secrets/kubernetes.io/serviceaccount/ca.crt")
+    token                  = file("/var/run/secrets/kubernetes.io/serviceaccount/token")
+  }
+}
+
+# 1. Install ArgoCD
+resource "helm_release" "argocd" {
+  name             = "argocd"
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
+  namespace        = "argocd"
+  create_namespace = true
+
+  set {
+    name  = "server.service.type"
+    value = "ClusterIP"
+  }
+}
+
+# 2. Bootstrap the "Root" App
+# This tells ArgoCD: "Go look at my GitHub repo to manage everything else"
+# resource "kubernetes_manifest" "root_app" {
+#   depends_on = [helm_release.argocd]
+#   manifest = {
+#     apiVersion = "argoproj.io/v1alpha1"
+#     kind       = "Application"
+#     metadata = {
+#       name      = "root-app"
+#       namespace = "argocd"
+#     }
+#     spec = {
+#       project = "default"
+#       source = {
+#         repoURL        = "https://github.com/jojees/DevopsLab.git"
+#         targetRevision = "main"
+#         path           = "argocd/bootstrap"
+#       }
+#       destination = {
+#         server    = "https://kubernetes.default.svc"
+#         namespace = "argocd"
+#       }
+#       syncPolicy = {
+#         automated = { prune = true, selfHeal = true }
+#       }
+#     }
+#   }
+# }
+
+resource "argocd_application" "root_app" {
+  depends_on = [helm_release.argocd]
+  metadata {
+    name      = "root-app"
+    namespace = "argocd"
+  }
+  spec {
+    project = "default"
+    source {
+      repo_url        = "https://github.com/jojees/DevopsLab.git"
+      target_revision = "main"
+      path            = "argocd/bootstrap"
+    }
+    destination {
+      server    = "https://kubernetes.default.svc"
+      namespace = "argocd"
+    }
+    sync_policy {
+      automated {
+        prune     = true
+        self_heal = true
+      }
+    }
+  }
+}

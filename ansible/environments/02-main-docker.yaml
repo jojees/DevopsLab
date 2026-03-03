@@ -1,14 +1,14 @@
 plugin: community.docker.docker_containers
 docker_host: unix://var/run/docker.sock
-verbose_output: False
+verbose_output: false
 timeout: 20
 debug: false
 ansible_user: root
 keyed_groups:
-  - key: 'docker_platform'
-    prefix: os
-  - key: 'docker_driver'
-    prefix: drv
+  # - key: 'docker_platform'
+  #   prefix: os
+  # - key: 'docker_driver'
+  #   prefix: drv
   - key: 'docker_hostconfig.NetworkMode'
     separator: ""
   # - key: 'docker_config.Labels["com.docker.compose.project"]'
@@ -22,14 +22,22 @@ keyed_groups:
   - key: environment_placement
     prefix: ""
     separator: ""
+  - key: environment_group
+    prefix: ""
+    separator: ""
+  - key: container_service
+    prefix: "service"
+    separator: "_"
 
 compose:
   # container_platform_version: docker_config.Image | split(':') | last | replace('-', '.')
   container_platform_pretty_name: docker_config.Image | pplatform_family
   environment_placement: docker_hostconfig.NetworkMode | penvironment_placement
+  environment_group: docker_config.Labels["environment_group"]
   environment_name: docker_hostconfig.NetworkMode
   application_age: docker_config.Labels["application.age"]
   application_group: docker_config.Labels["application.group"]
   billing_owner: docker_config.Labels["billing.owner"]
   environment_owner: docker_config.Labels["environment_owner"]
   maintenance_owner: docker_config.Labels["maintenance_owner"]
+  container_service: docker_config.Labels["com.docker.compose.service"]

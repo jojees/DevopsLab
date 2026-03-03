@@ -1,0 +1,33 @@
+---
+- name: Download hashicorp apt repo gpg key
+  ansible.builtin.get_url:
+    url: "{{ packages_hashicorp_repo_key_url }}"
+    dest: "{{ packages_hashicorp_key_path }}"
+    mode: '0666'
+
+- name: Add hashicorp repository to the nodes
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by={{ packages_hashicorp_key_path }}] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    filename: hashicorp
+    state: present
+    update_cache: true
+
+- name: Install vagrant
+  ansible.builtin.apt:
+    name: vagrant
+    state: present
+    autoremove: true
+    autoclean: true
+    clean: true
+
+# - name: Install g++
+#   ansible.builtin.apt:
+#     name: g++
+#     state: present
+#     autoremove: true
+#     autoclean: true
+#     clean: true
+
+# - name: Setup vagrant share
+#   ansible.builtin.shell:
+#     vagrant plugin install vagrant-share

@@ -1,0 +1,11 @@
+---
+- name: Install packages needed on workstation
+  community.general.homebrew:
+    name: "{{ workstation_packages }}"
+    state: latest
+    update_homebrew: true
+
+- name: Installing Ansible Collections using requirements.yml
+  ansible.builtin.command: ansible-galaxy collection install -r ../requirements.yaml
+  register: ansible_collection_installation
+  changed_when: ansible_collection_installation.rc != 0

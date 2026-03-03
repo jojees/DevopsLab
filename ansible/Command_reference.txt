@@ -1,2 +1,5 @@
 # Show the variables associated with the node(s)
 ansible all -m debug -a "var=hostvars[inventory_hostname]"
+
+# Get facts from the servers
+ansible all -m gather_facts

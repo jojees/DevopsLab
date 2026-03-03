@@ -1,30 +1,35 @@
 ---
 - name: Upgrade to latest packages.
-  apt:
-    upgrade: yes
-    update_cache: yes
-    cache_valid_time: "{{ cache_valid_time }}"
+  ansible.builtin.apt:
+    upgrade: true
+    update_cache: true
+    cache_valid_time: "{{ system_defaults_cache_valid_time }}"
   register: aptupdate
   no_log: true
 
-- debug: msg="{{ aptupdate.stdout_lines }}"
+- name: Register the output from apt update
+  ansible.builtin.debug:
+    var: aptupdate.stdout_lines
   when: aptupdate.stdout_lines is defined
 
 - name: Install prerequisite packages.
-  apt:
-    name: "{{ default_packages }}"
+  ansible.builtin.apt:
+    name: "{{ system_defaults_default_packages }}"
   register: aptinstall
-  ignore_errors: yes
+  ignore_errors: true
   no_log: true
 
 - name: Apt command execution succeeded.
-  debug: msg="{{ aptinstall.stdout_lines }}"
+  ansible.builtin.debug:
+    var: aptinstall.stdout_lines
   when: aptinstall.stdout_lines is defined
 
 - name: Apt command execution failed.
-  debug: msg="{{ aptinstall.stderr_lines }}"
+  ansible.builtin.debug:
+    var: aptinstall.stderr_lines
   when: aptinstall.stderr_lines is defined
 
-- name: Apt command evaluation failed. 
-  debug: msg="{{ aptinstall }}"
+- name: Apt command evaluation failed.
+  ansible.builtin.debug:
+    var: aptinstall
   when: aptinstall is defined

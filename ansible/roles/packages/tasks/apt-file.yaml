@@ -1,0 +1,5 @@
+---
+- name: Install apt-file packages
+  ansible.builtin.apt:
+    name: apt-file
+    state: present

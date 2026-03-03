@@ -1,0 +1,16 @@
+---
+- name: Upgrade operating system
+  ansible.builtin.include_tasks:
+    file: upgrade-os.yaml
+
+- name: Setup hashicorp products
+  ansible.builtin.include_tasks:
+    file: hashicorp.yaml
+
+- name: Setup apt-file
+  ansible.builtin.include_tasks:
+    file: apt-file.yaml
+
+- name: Setup snapd
+  ansible.builtin.include_tasks:
+    file: snapd.yaml

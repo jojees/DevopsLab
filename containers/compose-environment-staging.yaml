@@ -2,17 +2,26 @@ version: "3.9"
 
 services:
   ubuntu20:
+    hostname: stage01
+    environment:
+      env_type: stage
     networks:
-      - stage 
+      - stage
 
   ubuntu22:
+    hostname: stage02
+    environment:
+      env_type: stage
     networks:
-      - stage 
+      - stage
 
   ubuntu18:
+    hostname: stage03
+    environment:
+      env_type: stage
     networks:
-      - stage 
+      - stage
 
 networks:
   stage:
-    name: staging
+    name: stage

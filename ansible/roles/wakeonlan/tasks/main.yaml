@@ -1,0 +1,6 @@
+---
+- name: Send a magic Wake-on-LAN packet to start the servers
+  community.general.wakeonlan:
+    mac: "{{ item }}"
+  delegate_to: localhost
+  loop: "{{ wakeonlan_mac_addresses }}"

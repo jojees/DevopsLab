@@ -1,0 +1,11 @@
+# Partition and mount points
+gluster_partition_size: "50G"
+gluster_mount_point: "/mnt/jdev_lab_volume"
+shared_mount_point: "/mnt/jdev_lab_resources"
+
+# GlusterFS volume details
+gluster_volume_name: "jdev_lab_volume"
+gluster_replicas: 2
+gluster_nodes: 
+  - pi2.jdevlab.local
+  - pi3.jdevlab.local

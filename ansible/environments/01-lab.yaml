@@ -1,0 +1,39 @@
+labservers:
+  hosts:
+    server01.jojees.local:
+      ansible_host: 192.168.2.3
+      ansible_user: joji
+      ansible_password: joji
+      ansible_become_password: joji
+  vars:
+    ansible_connection: ssh
+
+workstation:
+  hosts:
+    localhost:
+  vars:
+    ansible_connection: local
+
+jdevlab:
+  hosts:
+    pi1.jdevlab.local:
+      ansible_host: 192.168.1.160
+    pi2.jdevlab.local:
+      ansible_host: 192.168.1.162
+    pi3.jdevlab.local:
+      ansible_host: 192.168.1.161
+  vars:
+    ansible_user: jdevlab
+    ansible_password: jdevlab
+    ansible_become_password: jdevlab
+    ansible_connection: ssh
+    ansible_become: true
+
+# containers:
+#   hosts:
+#     mycontainer:
+#     dnsbind9:
+#     sendmail:
+#   vars:
+#     ansible_connection: lxd
+#     ansible_lxd_remote: jdevlabcluster

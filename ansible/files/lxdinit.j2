@@ -1,0 +1,58 @@
+config:
+  core.https_address: :9999
+  core.trust_password: homelab
+networks:
+- config:
+    ipv4.address: 10.184.37.1/24
+    ipv4.nat: "true"
+    ipv6.address: fd42:774a:43fc:e20e::1/64
+    ipv6.nat: "true"
+  description: "Core Network"
+  name: lxdbr0
+  type: "bridge"
+  project: default
+storage_pools:
+- config:
+    size: 7GiB
+  description: ""
+  name: default
+  driver: btrfs
+profiles:
+- config: {}
+  description: "Default profile"
+  devices:
+    eth0:
+      name: eth0
+      network: lxdbr0
+      type: nic
+    root:
+      path: /
+      pool: default
+      type: disk
+  name: default
+- config:
+    cloud-init.vendor-data: |
+      #cloud-config
+      package_update: true
+      package_upgrade: true
+      apt_reboot_if_required: true
+      packages:
+        - python3
+        - python3-pip
+        - python-is-python3
+      ansible:
+        package_name: ansible-core
+        install_method: pip
+  description: "General profile"
+  devices:
+    eth0:
+      name: eth0
+      network: lxdbr0
+      type: nic
+    root:
+      path: /
+      pool: default
+      type: disk
+  name: general
+projects: []
+cluster: null

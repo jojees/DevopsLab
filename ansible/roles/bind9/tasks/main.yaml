@@ -1,0 +1,32 @@
+---
+- name: Fail if required IP variables are not set
+  ansible.builtin.fail:
+    msg: "{{ item }} variable is not defined. Please check container IP setup."
+  when: vars[item] | default('') == ''
+  loop: "{{ bind9_required_ips }}"
+
+- name: Install BIND9
+  ansible.builtin.apt:
+    name: bind9
+    state: present
+
+- name: Configure BIND9 forward Zone
+  ansible.builtin.template:
+    src: db.jdevlab.local.j2
+    dest: /etc/bind/db.jdev.lab
+    mode: '0644'
+  notify: Restart BIND service
+
+- name: Configure BIND9 revere Zone
+  ansible.builtin.template:
+    src: db.192.168.1.j2
+    dest: /etc/bind/db.192.168.1
+    mode: '0644'
+  notify: Restart BIND service
+
+- name: Configure named.conf.local
+  ansible.builtin.template:
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+    mode: '0644'
+  notify: Restart BIND service
