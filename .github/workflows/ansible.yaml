@@ -1,18 +1,19 @@
 name: Ansible
 
 on:
-  push:
-    paths:
-      - 'ansible/**'
-    branches:
-      - main
-      - development
-  merge_group:
-  pull_request:
-    paths-ignore:
-      - ".vscode/**"
-      - "**/*.md"
-      - ".github/ISSUE_TEMPLATE/**"
+  workflow_dispatch:
+  # push:
+  #   paths:
+  #     - 'ansible/**'
+  #   branches:
+  #     - main
+  #     - development
+  # merge_group:
+  # pull_request:
+  #   paths-ignore:
+  #     - ".vscode/**"
+  #     - "**/*.md"
+  #     - ".github/ISSUE_TEMPLATE/**"
 
 defaults:
   run:
