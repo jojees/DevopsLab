@@ -95,12 +95,13 @@ resource "helm_release" "argocd" {
   #   name  = "repoServer.volumes"
   #   value = "[{name: 'cmp-tmp', emptyDir: {}}]"
   # }
-  set_list {
-    name  = "repoServer.volumes"
-    value = [
-      "{name: 'cmp-tmp', emptyDir: {}}"
-    ]
-  }
+  # TODO: Fix this.
+  # set_list {
+  #   name  = "repoServer.volumes"
+  #   value = [
+  #     "{name: 'cmp-tmp', emptyDir: {}}"
+  #   ]
+  # }
 
   # 2. Configure Redis Eviction Policy (CRITICAL)
   # 'allkeys-lru' ensures Redis drops old cache data when it hits the limit
