@@ -3,6 +3,7 @@ terraform {
   required_providers {
     helm = { source = "hashicorp/helm", version = "~> 2.12" }
     kubernetes = { source = "hashicorp/kubernetes", version = "~> 2.25" }
+    argocd = { source  = "oboukili/argocd", version = "6.1.1" }
   }
 }
 
@@ -36,28 +37,54 @@ resource "helm_release" "argocd" {
 
 # 2. Bootstrap the "Root" App
 # This tells ArgoCD: "Go look at my GitHub repo to manage everything else"
-resource "kubernetes_manifest" "root_app" {
+# resource "kubernetes_manifest" "root_app" {
+#   depends_on = [helm_release.argocd]
+#   manifest = {
+#     apiVersion = "argoproj.io/v1alpha1"
+#     kind       = "Application"
+#     metadata = {
+#       name      = "root-app"
+#       namespace = "argocd"
+#     }
+#     spec = {
+#       project = "default"
+#       source = {
+#         repoURL        = "https://github.com/jojees/DevopsLab.git"
+#         targetRevision = "main"
+#         path           = "argocd/bootstrap"
+#       }
+#       destination = {
+#         server    = "https://kubernetes.default.svc"
+#         namespace = "argocd"
+#       }
+#       syncPolicy = {
+#         automated = { prune = true, selfHeal = true }
+#       }
+#     }
+#   }
+# }
+
+resource "argocd_application" "root_app" {
   depends_on = [helm_release.argocd]
-  manifest = {
-    apiVersion = "argoproj.io/v1alpha1"
-    kind       = "Application"
-    metadata = {
-      name      = "root-app"
+  metadata {
+    name      = "root-app"
+    namespace = "argocd"
+  }
+  spec {
+    project = "default"
+    source {
+      repo_url        = "https://github.com/jojees/DevopsLab.git"
+      target_revision = "main"
+      path            = "argocd/bootstrap"
+    }
+    destination {
+      server    = "https://kubernetes.default.svc"
       namespace = "argocd"
     }
-    spec = {
-      project = "default"
-      source = {
-        repoURL        = "https://github.com/jojees/DevopsLab.git"
-        targetRevision = "main"
-        path           = "argocd/bootstrap"
-      }
-      destination = {
-        server    = "https://kubernetes.default.svc"
-        namespace = "argocd"
-      }
-      syncPolicy = {
-        automated = { prune = true, selfHeal = true }
+    sync_policy {
+      automated {
+        prune     = true
+        self_heal = true
       }
     }
   }
