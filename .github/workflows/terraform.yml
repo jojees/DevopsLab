@@ -34,6 +34,7 @@ jobs:
         with:
           workspace: ${{ env.TF_WORKSPACE }}
           configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+          organization: ${{ env.TF_ORG }}
           # Plan only if it's a PR or if we are on a dev branch
           plan_only: ${{ github.event_name == 'pull_request'|| startsWith(github.ref, 'refs/heads/dev') }}
         env:
@@ -47,5 +48,6 @@ jobs:
         uses: hashicorp/tfc-workflows-github/actions/apply-run@v1.0.0
         with:
           run: ${{ steps.run.outputs.run_id }}
+          organization: ${{ env.TF_ORG }}
         env:
           TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
