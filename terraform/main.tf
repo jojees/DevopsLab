@@ -1,21 +1,21 @@
 # main.tf
 terraform {
   required_providers {
-    helm = { source = "hashicorp/helm", version = "~> 2.12" }
+    helm       = { source = "hashicorp/helm", version = "~> 2.12" }
     kubernetes = { source = "hashicorp/kubernetes", version = "~> 2.25" }
-    argocd = { source  = "oboukili/argocd", version = "6.1.1" }
+    argocd     = { source = "argoproj-labs/argocd", version = "~> 7.0", core = true }
   }
 }
 
 provider "kubernetes" {
-  host = "https://kubernetes.default.svc"
+  host                   = "https://kubernetes.default.svc"
   cluster_ca_certificate = file("/var/run/secrets/kubernetes.io/serviceaccount/ca.crt")
   token                  = file("/var/run/secrets/kubernetes.io/serviceaccount/token")
 }
 
 provider "helm" {
   kubernetes {
-    host = "https://kubernetes.default.svc"
+    host                   = "https://kubernetes.default.svc"
     cluster_ca_certificate = file("/var/run/secrets/kubernetes.io/serviceaccount/ca.crt")
     token                  = file("/var/run/secrets/kubernetes.io/serviceaccount/token")
   }
@@ -128,6 +128,27 @@ resource "helm_release" "argocd" {
     name  = "configs.cm.timeout.reconciliation"
     value = "600s" # Increase to 5 minutes
   }
+}
+
+# data "kubernetes_secret" "argocd_admin_pwd" {
+#   depends_on = [helm_release.argocd]
+#   metadata {
+#     name      = "argocd-initial-admin-secret"
+#     namespace = "argocd"
+#   }
+# }
+
+# 2. The Provider uses the Data Source
+# provider "argocd" {
+#   server_addr = "argocd-server.argocd.svc.cluster.local:80"
+#   insecure    = true
+#   username    = "admin"
+#   password    = data.kubernetes_secret.argocd_admin_pwd.data["password"]
+# }
+
+# The Provider (No secret data source needed)
+provider "argocd" {
+  core = true
 }
 
 # 2. Bootstrap the "Root" App
