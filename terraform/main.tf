@@ -7,12 +7,14 @@ terraform {
 }
 
 provider "kubernetes" {
-  host = "https://kubernetes.default.svc" # TFC Agent uses internal K8s DNS
+  host = "https://kubernetes.default.svc"
+  cluster_ca_certificate = file("/var/run/secrets/kubernetes.io/serviceaccount/ca.crt")
 }
 
 provider "helm" {
   kubernetes {
     host = "https://kubernetes.default.svc"
+    cluster_ca_certificate = file("/var/run/secrets/kubernetes.io/serviceaccount/ca.crt")
   }
 }
 
