@@ -137,54 +137,30 @@ resource "helm_release" "argocd" {
   }
 }
 
-# data "kubernetes_secret" "argocd_admin_pwd" {
-#   depends_on = [helm_release.argocd]
-#   metadata {
-#     name      = "argocd-initial-admin-secret"
-#     namespace = "argocd"
-#   }
-# }
-
-# 2. The Provider uses the Data Source
-# provider "argocd" {
-#   server_addr = "argocd-server.argocd.svc.cluster.local:80"
-#   insecure    = true
-#   username    = "admin"
-#   password    = data.kubernetes_secret.argocd_admin_pwd.data["password"]
-# }
-
-# The Provider (No secret data source needed)
-provider "argocd" {
-  core = true
+resource "time_sleep" "wait_for_argocd" {
+  depends_on = [helm_release.argocd]
+  create_duration = "60s"
 }
 
-# 2. Bootstrap the "Root" App
-# This tells ArgoCD: "Go look at my GitHub repo to manage everything else"
-# resource "kubernetes_manifest" "root_app" {
-#   depends_on = [helm_release.argocd]
-#   manifest = {
-#     apiVersion = "argoproj.io/v1alpha1"
-#     kind       = "Application"
-#     metadata = {
-#       name      = "root-app"
-#       namespace = "argocd"
-#     }
-#     spec = {
-#       project = "default"
-#       source = {
-#         repoURL        = "https://github.com/jojees/DevopsLab.git"
-#         targetRevision = "main"
-#         path           = "argocd/bootstrap"
-#       }
-#       destination = {
-#         server    = "https://kubernetes.default.svc"
-#         namespace = "argocd"
-#       }
-#       syncPolicy = {
-#         automated = { prune = true, selfHeal = true }
-#       }
-#     }
-#   }
+data "kubernetes_secret" "argocd_admin_pwd" {
+  depends_on = [time_sleep.wait_for_argocd]
+  metadata {
+    name      = "argocd-initial-admin-secret"
+    namespace = "argocd"
+  }
+}
+
+# 2. The Provider uses the Data Source
+provider "argocd" {
+  server_addr = "argocd-server.argocd.svc.cluster.local:80"
+  insecure    = true
+  username    = "admin"
+  password    = data.kubernetes_secret.argocd_admin_pwd.data["password"]
+}
+
+# The Provider (No secret data source needed)
+# provider "argocd" {
+#   core = true
 # }
 
 resource "argocd_application" "root_app" {
