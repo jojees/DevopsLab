@@ -29,6 +29,12 @@ resource "helm_release" "argocd" {
   version          = "9.4.7"
   namespace        = "argocd"
   create_namespace = true
+  
+  # Crucial for slow ARM nodes:
+  timeout                    = 900   # Increase to 15 minutes
+  wait                       = false # Don't block the TF run waiting for pods to be 'Ready'
+  disable_openapi_validation = true  # Speeds up the initial API handshake
+  cleanup_on_fail            = true  # Automatically rolls back if it fails again
 
   # Crucial for slow ARM nodes:
   timeout                    = 900   # Increase to 15 minutes
